@@ -51,14 +51,12 @@ function buscarImagen(e){
 function llamarAPI(){
 
     const  nombreImagen = inputImagen.value;
-    console.log(nombreImagen)
     const url = `https://pixabay.com/api/?key=${api_key}&q=${nombreImagen}&image_type=photo&per_page=${imagenesPorPagina}&page=${paginaActual}`
     //const url = `https://pixabay.com/api/?key=${api_key}&q=${nombreImagen}&image_type=photo`;
     fetch(url)
         .then(resultado => resultado.json())
         .then(data => {
             totalPaginas = calcularPaginacion(data.totalHits)
-            console.log(totalPaginas)
 
             limpiarHTML(resultadoView);
             mostrarImagenes(data.hits)
