@@ -48,19 +48,23 @@ function buscarImagen(e){
 
 }
 
-function llamarAPI(){
-
+async function llamarAPI(){
     const  nombreImagen = inputImagen.value;
     const url = `https://pixabay.com/api/?key=${api_key}&q=${nombreImagen}&image_type=photo&per_page=${imagenesPorPagina}&page=${paginaActual}`
     //const url = `https://pixabay.com/api/?key=${api_key}&q=${nombreImagen}&image_type=photo`;
-    fetch(url)
-        .then(resultado => resultado.json())
-        .then(data => {
-            totalPaginas = calcularPaginacion(data.totalHits)
+    try {
 
-            limpiarHTML(resultadoView);
-            mostrarImagenes(data.hits)
-        })
+        const respuesta = await fetch(url)
+        const resultado = await respuesta.json()
+
+        totalPaginas = calcularPaginacion(resultado.totalHits)
+
+        limpiarHTML(resultadoView);
+        mostrarImagenes(resultado.hits)
+
+    } catch (error) {
+        console.log(error)
+    }
     
 }
 
